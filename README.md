@@ -1,1 +1,1 @@
-Terminal command recommender.
+Upload TFEvent file and plot info you want from it.
