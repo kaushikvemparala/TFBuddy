@@ -1,0 +1,14 @@
+services:
+  - type: web
+    buildCommand: |
+      cd src  # Change to the directory where your React app is located
+      npm install  # Install npm dependencies
+      npm run build  # Build the React app
+    buildDirectory: /build  # Specify the directory where the built files are located
+
+  - type: web
+    buildCommand: |
+      python -m venv venv  # Create a virtual environment for Python
+      source venv/bin/activate  # Activate the virtual environment (use 'venv\Scripts\activate' on Windows)
+      pip install -r requirements.txt  # Install Python dependencies
+    startCommand: gunicorn -b 0.0.0.0:$PORT backend:server  # Start the Python backend using Gunicorn
