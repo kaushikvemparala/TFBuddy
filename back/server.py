@@ -31,6 +31,7 @@ def upload_file():
         file.save(filename)
         file_path = os.path.join('uploads', filename)
         scalars = openFile(UPLOAD_FOLDER)
+        print(scalars)
         # Here you can save the file to your database
         return {'res': scalars, 'path': file_path}
 
@@ -53,8 +54,8 @@ def plot_scalars():
 
     fig = Figure()
     axis = fig.add_subplot(1, 1, 1)
+
     for steps, vals in scalar_data:
-        print(vals)
         axis.plot(steps, vals)
 
     # Convert plot to PNG image
@@ -77,6 +78,8 @@ def openFile(file_path):
     for name in scalar_names:
         scalars += name
         scalars += ", "
+    if scalars == "":
+        return "No data. Please check if you uploaded the right file."
     return scalars
 
 def getTFEvent(file_path):

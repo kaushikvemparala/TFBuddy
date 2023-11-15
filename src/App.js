@@ -6,6 +6,7 @@ function App() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [displayText, setDisplayText] = useState('');
   const [plot, setPlot] = useState(null);
+  const [errorMsg, setError] = useState("");
 
   const handleInputChange = (e) => {
     setInputText(e.target.value);
@@ -41,7 +42,11 @@ function App() {
       .then(response => response.json())
       .then(data => {
           setTimeout(() => {
-            setPlot(data.res);
+            if (data.error === "") {
+              setPlot(data.res);
+            } else {
+              setError(data.error);
+            }
           });
       });
     } catch (error) {
@@ -73,11 +78,11 @@ function App() {
             {displayText}
           </p>
           <p>
-            Which one do you want to plot?
+            Which scalar do you want to plot?
           </p>
           <input type="string" value={inputText} onChange={handleInputChange}/>
           <button onClick={() => handleTextInput()}>Submit</button>
-          <img src={plot} alt="Plot" />
+          {errorMsg !== "" ? <span style={{color: 'red'}}>{errorMsg}</span> : (plot && <img src={plot} alt="Plot" />)}
           <p>
             Or choose a new file.
           </p>
